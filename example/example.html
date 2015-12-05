@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Form Validator</title>
+	<link rel="stylesheet" href="css/github-gist.css">
+	<link rel="stylesheet" href="css/fv.css">
+</head>
+<body>
+	
+	<div class="container">
+		<h1 class="main-title">Input Validator</h1>
+		<p>Input validator is a tiny library without dependencies that is used to validate data from single input.</p>
+		<h2>Instalation</h2>
+		<ul>
+			<li>Install with Bower: <code class="code-inline">bower install input-validator</code></li>
+			<li>Downlod from <a href="#">GitHub</a></li>
+		</ul>
+
+		<p>Link library before closing body tag</p>
+		<pre><code class="html">&lt;script src=&quot;js/input-validator.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+		<p>Link css styles to the head of document (optional)</p>
+		<pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;css/input-validator.min.css&quot;&gt;</code></pre>
+
+		<h2>Usage</h2>
+		<p>Recomended HTML structure</p>
+		<pre><code class="html">&lt;div class=&quot;input-group&quot;&gt;
+  &lt;label for=&quot;email&quot;&gt;Your Email:&lt;/label&gt;
+  &lt;input type=&quot;email&quot; class=&quot;iv-input&quot; id=&quot;email&quot; name=&quot;email&quot;&gt;
+&lt;/div&gt;</code></pre>
+		
+		<p>Javascript Validation</p>
+		<pre><code class="javascript">// Select input from DOM tree
+var input = document.querySelector('input');
+
+// Pass it in validate function
+var validation = validate(input)
+  .clear()
+  .required()
+  .max(120)
+  .match(email);
+
+// If validation passed do something
+if (validation.isValid()) {
+	...
+}</code></pre>
+	</div>
+
+	<div class="container">
+		<h2>Basic Styling</h2>
+
+		<form action="#" class="fv-form" data-fv-form="basic">
+			<div class="input-group">
+				<label for="email">Your Email:</label>
+				<input type="email" class="fv-input" id="email" placeholder="example@email.com" name="email">
+			</div>
+
+			<div class="input-group">
+				<input type="submit" id="submit" class="fv-submit" value="Submit" data-fv-submit>
+			</div>
+
+		</form>
+	</div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+
+	<script src="../validator.js"></script>
+	<script src="example.js"></script>
+</body>
+</html>

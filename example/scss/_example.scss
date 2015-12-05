@@ -1,0 +1,50 @@
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+li {
+	margin-top: 1rem;
+}
+
+.site-header {
+	background-color: $white-gray;
+	border-bottom: 1px solid #eee;
+	padding-top: 3rem;
+	padding-bottom: 2.5rem;
+	margin-bottom: 2rem;
+}
+
+.site-title {
+	margin-bottom: 1.5rem;
+} 
+
+.header-btns {
+	margin-top: 2.5rem;
+	margin-bottom: 1rem;
+
+	.btn {
+		margin-right: 1rem;
+	}
+
+	@media screen and (max-width: 600px) {
+		.btn {
+			display: block;
+			width: 100%;
+			text-align: center;
+			margin-top: 1rem;
+		}
+	}
+}
+
+.section {
+	margin-top: 3rem;
+}
+
+.section-title {
+	a {
+		color: $black-gray;
+	}
+	
+}

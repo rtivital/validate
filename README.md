@@ -24,7 +24,7 @@ git clone https://github.com/rtivital/validate.git
 2. Include the stylesheet on your document's `<head>` (optional)
 ```html
 <head>
-  <link rel="stylesheet" href="input-validator.min.css">
+	<link rel="stylesheet" href="input-validator.min.css">
 </head>
 ```
 
@@ -238,21 +238,49 @@ validate('#email')
 ```
 
 #### error and success
-`error(class)` and `success(class)` methods can be used to add class to the selected input element
+`error()` and `success()` methods can be used to add class specified in settings to the selected input element
 ```javascript
 validate('#email')
 	.match('email')
 	.onError(function() {
-		this.error('iv-error');
+		this.error();
 	})
 	.onSuccess(function() {
-		this.success('iv-success');
+		this.success();
 	});
+```
+
+### Settings
+You can provide settings object to `validate` function
+```javascript
+// These are default settings
+var emailValidation = validate('#email' {
+	messages: {
+		min: 'This field should contain at least %s charachters',
+		max: 'This field should not contain more than %s charachters',
+		required: 'This field is required',
+		match: 'This field should match this pattern "%s"',
+		contain: 'This field sholud contain these charachters %s'
+	},
+	regexps: {
+		ip: /^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i,
+		url: /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
+		date: /\d{1,2}-|.\d{1,2}-|.\d{4}/,
+		base64: /[^a-zA-Z0-9\/\+=]/i,
+		email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+	},
+	classes: {
+		message: 'iv-message',
+		errorsContainer: 'iv-errors',
+		inputSuccess: 'iv-success',
+		inputError: 'iv-error'
+	}
+});
 ```
 
 ## Browser support
 Input validator uses these [ES5](http://caniuse.com/#feat=es5) features: 
-* `Array.isArray()`  
+* `Array.isArray()`	
 * `Array.some()`
 * `Array.every()`
 * `Array.forEach()` 

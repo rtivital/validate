@@ -6,20 +6,17 @@
 			? (el.charAt(0) === '#' 
 				? document.getElementById(el.slice(1))
 				: document.querySelector(el))
-			: input; 
+			: el; 
 	};
 
 	var _isInput = function(el) {
-		var inputTags = ['input', 'textarea', 'select'];
-		return inputTags.some(function(tagName) {
+		return ['input', 'textarea', 'select'].some(function(tagName) {
 			return el.tagName.toLowerCase() === tagName;
 		});
 	};
 
 	var _isString = function(str) {
-		return typeof str === 'string' 
-			? str.trim().length > 0 
-			: false;
+		return typeof str === 'string' ? str.trim().length > 0 : false;
 	};
 
 	var _isNumber = function(num) {
@@ -66,14 +63,14 @@
 		return element;
 	};
 
-	var _contain = function(item) {
-		return this.value.indexOf(item) > -1;
-	};
-
 	var _replaceClass = function(el, oldClass, newClass) {
 		el.classList.remove(oldClass);
 		el.classList.add(newClass);
 		return el;
+	};
+
+	var _contain = function(item) {
+		return this.value.indexOf(item) > -1;
 	};
 
 	var Validate = function(input, settings) {
@@ -93,10 +90,10 @@
         email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
 			},
 			classes: {
-				message: 'fv-message',
-				errorsContainer: 'fv-errors',
-				inputSuccess: 'fv-success',
-				inputError: 'fv-error'
+				message: 'iv-message',
+				errorsContainer: 'iv-errors-container',
+				inputSuccess: 'iv-success',
+				inputError: 'iv-error'
 			}
 		};
 
@@ -146,6 +143,10 @@
 
 	Validate.prototype.match = function(pattern, message) {
 		message = message || this.settings.messages['match'];
+
+		// Figure out if passed pattern is regexp
+		// in that case use provided regexp
+		// Otherwize try to grab regexp from settings
 		var regexp;
 		if (_isRegExp(pattern)) {
 			regexp = pattern;
@@ -196,23 +197,24 @@
 		return this;
 	};
 
-	Validate.prototype.onError = function(fn) {
-		fn = fn || function() { 
-			// Show first error and replace success class with error class
-			this.showErrors(0);
-			_replaceClass(this.input, this.settings.classes.inputSuccess, this.settings.classes.inputError);
-		};
+	Validate.prototype.error = function() {
+		_replaceClass(this.input, this.settings.classes.inputSuccess, this.settings.classes.inputError);
+		return this;
+	};
 
+	Validate.prototype.success = function() {
+		_replaceClass(this.input, this.settings.classes.inputError, this.settings.classes.inputSuccess);
+		return this;
+	};
+
+	Validate.prototype.onError = function(fn) {
+		fn = fn || function() {};
 		if (!this.isValid()) { fn.call(this); }
 		return this;
 	};
 
 	Validate.prototype.onSuccess = function(fn) {
-		fn = fn || function() { 
-			// Replace error class with success class
-			_replaceClass(this.input, this.settings.classes.inputError, this.settings.classes.inputSuccess);
-		};
-
+		fn = fn || function() {};
 		if (this.isValid()) { fn.call(this); }
 		return this;
 	};
