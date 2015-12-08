@@ -1,0 +1,21 @@
+{
+  "name": "input-validator.js",
+  "description": "modern lightweight library without dependencies for data validation from single input tag.",
+  "main": "validate.js",
+  "authors": [
+    "rtivital"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "validation"
+  ],
+  "homepage": "https://github.com/rtivital/validate",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
