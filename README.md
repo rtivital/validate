@@ -6,7 +6,7 @@ View demo [here](http://rtivital.github.io/validate/)
 ## Installation
 Install with Bower:
 ```
-bower install input-validator
+bower install input-validator.js
 ```
 Or clone from Github:
 ```
