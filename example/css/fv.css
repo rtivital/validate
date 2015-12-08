@@ -259,7 +259,10 @@ a {
     display: block;
     margin-bottom: .7rem; }
 
-.fv-input, .fv-textarea {
+.mt {
+  margin-top: 1rem; }
+
+.iv-input, .iv-textarea {
   display: block;
   width: 100%;
   padding-left: 1rem;
@@ -267,33 +270,28 @@ a {
   padding-top: .7rem;
   padding-bottom: .7rem;
   border: 1px solid #ccc; }
-  .fv-input:focus, .fv-textarea:focus {
+  .iv-input:focus, .iv-textarea:focus {
     outline: 0;
     border-color: #03A9F4; }
-  .fv-input.fv-success, .fv-textarea.fv-success {
+  .iv-input.iv-success, .iv-textarea.iv-success {
     border-color: #27AE60;
     color: #1c7c44; }
-    .fv-input.fv-success:focus, .fv-textarea.fv-success:focus {
-      outline: 2px solid; }
-  .fv-input.fv-error, .fv-textarea.fv-error {
+  .iv-input.iv-error, .iv-textarea.iv-error {
     border-color: #E74C3C;
     color: #cd2a19; }
-  .fv-input.fv-warning, .fv-textarea.fv-warning {
+  .iv-input.iv-warning, .iv-textarea.iv-warning {
     border-color: #d7a616;
     color: #b78d13; }
 
-.fv-message {
-  font-size: 1.3rem; }
-  .fv-message-warning {
-    color: #b78d13; }
-  .fv-message-success {
-    color: #1c7c44; }
-  .fv-message-error {
-    color: #cd2a19; }
+.iv-message {
+  font-size: 1.3rem;
+  color: #cd2a19; }
 
 .code-inline {
   background-color: #f5f5f5;
-  padding: .2rem .5rem;
+  padding: .2rem .7rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
   border: 1px solid #ccc;
   border-radius: 4px; }
 
@@ -502,13 +500,13 @@ a {
 .markdown .hljs-link_url {
   text-decoration: underline; }
 
-ul {
+.list {
   margin: 0;
   padding: 0;
-  list-style: none; }
-
-li {
-  margin-top: 1rem; }
+  list-style-position: inside; }
+  .list li {
+    margin-top: 2rem;
+    margin-bottom: 0; }
 
 .site-header {
   background-color: #f5f5f5;
@@ -520,13 +518,13 @@ li {
 .site-title {
   margin-bottom: 1.5rem; }
 
-.header-btns {
+.control-btns {
   margin-top: 2.5rem;
   margin-bottom: 1rem; }
-  .header-btns .btn, .header-btns .fv-submit {
+  .control-btns .btn {
     margin-right: 1rem; }
   @media screen and (max-width: 600px) {
-    .header-btns .btn, .header-btns .fv-submit {
+    .control-btns .btn {
       display: block;
       width: 100%;
       text-align: center;
@@ -537,3 +535,29 @@ li {
 
 .section-title a {
   color: #333; }
+
+.site-footer {
+  margin-top: 5rem;
+  background-color: #f5f5f5;
+  border-top: 1px solid #eee;
+  padding-top: 5rem;
+  padding-bottom: 3rem; }
+
+.example {
+  margin-top: 4rem; }
+  .example .container {
+    padding: 2rem;
+    background-color: #f5f5f5;
+    border: 1px solid #eee;
+    border-radius: 4px; }
+
+.input-wrapper .iv-input {
+  width: 80%;
+  float: left; }
+
+.input-wrapper .btn-default {
+  width: 20%;
+  height: 3.6rem;
+  line-height: 1.8rem;
+  border-radius: 0;
+  border-left: 0; }

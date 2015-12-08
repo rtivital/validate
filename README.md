@@ -1,5 +1,5 @@
-# Input validator
-Input validator is a modern lightweight library without dependencies for data validation from single `<input />` tag. 
+# Input Validator
+Input Validator is a modern lightweight library without dependencies for the data validation from single `<input />` tag. 
 
 View demo [here](http://rtivital.github.io/validate/)
 
@@ -21,14 +21,14 @@ git clone https://github.com/rtivital/validate.git
 	<script src="input-validator.min.js"></script>
 </body>
 ```
-2. Include the stylesheet on your document's `<head>` (optional)
+2. Include the stylesheet in your document `<head>` (optional)
 ```html
 <head>
 	<link rel="stylesheet" href="input-validator.min.css">
 </head>
 ```
 
-3. Grab `<input />` tag from the DOM tree and start data validation
+3. Grab `<input />` tag from the DOM tree and start the data validation
 ```javascript
 var btn = document.getElementById('validate-btn');
 btn.addEventListener('click', function(e) {
@@ -47,19 +47,19 @@ btn.addEventListener('click', function(e) {
 		});
 
 		if (emailValidation.isValid()) {
-			// If all specified tests passed do something
+			// If all specified tests have been passed, do something
 		}
 });
 ```
 
 ## Documentation
 ### Grabbing input element from the DOM tree
-You can either grab element by yourself and then pass it in `validate()` function
+You can either grab element yourself and then pass it in `validate()` function
 ```javascript
 var email = document.getElementById('email'),
 	emailValidation = validate(email);
 ```
-or simply pass selector in `validate()` function
+or just pass selector in `validate()` function
 ```javascript
 // It is recomended to pass in an id
 var emailValidation = validate('#email')
@@ -69,7 +69,7 @@ var emailValidation = validate('.email');
 ```
 
 ### Basic validation
-Once you grabbed your input element from the DOM you can start validation. Generally you want validation to occur with certain events (e.g. click, keyup, etc.). In this case consider this code:
+After you have grabbed your input element from the DOM you can start validation. Generally, the validation should occur with certain events (e.g. click, keyup, etc.). In this case you should consider this code:
 ```javascript
 var btn = document.getElementById('validate-btn');
 btn.addEventListener('click', function(e) {
@@ -89,13 +89,13 @@ btn.addEventListener('click', function(e) {
 		});
 });
 ```
-If you want to avoid new `validate` object creation each time event occurs you can create this object once before adding event listener and then refresh value:
+If you want to avoid a creation of new `validate` object every time, when the event occurs, you may create this object once before adding event listener and then refresh value:
 ```javascript
 var btn = document.getElementById('validate-btn'),
 		emailValidation = validate('#email');
 btn.addEventListener('click', function(e) {
 	e.preventDefault();
-	// Refresh method will asign new value from input tag to emailValidation object
+	// Refresh method will assign a new value from the input tag to emailValidation object
 	emailValidation
 		.refresh()
 		.clear()
@@ -115,25 +115,25 @@ btn.addEventListener('click', function(e) {
 
 ### Validation methods
 #### required
-`required(message)` returns if value contains at least 1 charachter except whitespace
+`required(message)` returns if the value contains at least one symbol, except for whitespace
 ```javascript
 validate('#email')
 	.required('This field is required');
 ```
 #### min
-`min(length, message)` returns if value length is greater than provided length
+`min(length, message)` returns if the value length is more than provided length
 ```javascript
 validate('#email')
 	.min(8, 'This input should contain at least %s characters');
 ```
 #### max
-`max(length, message)` returns if value length is less than provided length
+`max(length, message)` returns if the value length is less than provided length
 ```javascript
 validate('#email')
 	.max(50, 'This input should not contain more than %s characters');
 ```
 #### match
-`match(pattern, message)` returns if value matches certain pattern. Available patterns:
+`match(pattern, message)` returns if the value matches certain pattern. Available patterns:
 * email
 * ip
 * date
@@ -149,7 +149,7 @@ validate('#email')
 	.match(/^\-?[0-9]*\.?[0-9]+$/, 'This field should contain decimal');
 ```
 #### contain
-`contain(substring, message)` returns if value contains each provided character
+`contain(substring, message)` returns if the value contains each provided character
 ```javascript
 // You can pass in either array
 validate('#email')
@@ -160,10 +160,10 @@ validate('#email')
 	.contain('gmail', 'This field should contain this substring %s');
 ```
 ### Displaying errors
-All errors that will be displayed are appended to the `errorsContainer`. By default you don't need to create it by yourself - library will do this for (it will create and append errors container just before selected input tag).
+All errors that will be displayed are appended to the `errorsContainer`. By default you don't need to create it yourself - the library will do this for you (it will create and append `errorsContainer` just before selected input tag).
 To show errors you can call `showErrors(index)` method:
 ```javascript
-// This code will show all occured errors
+// This code will show all errors
 validate('#email')
 	.required()
 	.match('email')
@@ -171,14 +171,14 @@ validate('#email')
 	.showErrors();
 
 // If you do not want all errors to display you can pass in index\
-// And now it will show only first error
+// And now it will show only the first error
 validate('#email')
 	.required()
 	.match('email')
 	.contain('gmail')
 	.showErrors(0);
 ```
-Also you can access errors array and do everithing you want
+Also you can access errors array and do everything you like with it:
 ```javascript
 var emailValidation = validate('#email')
 	.required()
@@ -189,7 +189,7 @@ emailValidation.errors; // All errors are stored withib this array
 ```
 ### Callbacks
 #### onError
-`onError(fn)` accepts function that will be called when validation failed
+`onError(fn)` method accepts function, which will be called when validation fails
 ```javascript
 validate('#email')
 	.match('email')
@@ -201,7 +201,7 @@ validate('#email')
 	});
 ```
 #### onSuccess
-`onSuccess(fn)` accepts function that will be called when validation passed
+`onSuccess(fn)` method accepts function, which will be called when validation passes
 ```javascript
 validate('#email')
 	.match('email')
@@ -215,7 +215,7 @@ validate('#email')
 
 ### Helpers
 #### isValid
-`isValid()` method returns if all chosen tests passed successfully
+`isValid()` method returns if all chosen tests have been passed successfully
 ```javascript
 var emailValidation = validate('#email')
 	.min(8)
@@ -238,7 +238,7 @@ validate('#email')
 ```
 
 #### error and success
-`error()` and `success()` methods can be used to add class specified in settings to the selected input element
+`error()` and `success()` methods can be used to add class which is specified in settings to the selected input element
 ```javascript
 validate('#email')
 	.match('email')

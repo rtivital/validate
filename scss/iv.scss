@@ -1,0 +1,73 @@
+// Valiables
+$white: #fff;
+$white-gray: #f5f5f5;
+$light-gray: #ccc;
+$gray: #999;
+$dark-gray: #555;
+$black-gray: #333;
+$black: #222;
+
+// Primary Colors
+$light-blue:	#03A9F4 !default;
+$blue: 				darken($light-blue, 5%) !default;
+$dark-blue:		darken($blue, 7%) !default;
+
+// Success Colors
+$light-green:	#27AE60 !default;
+$green: 			darken($light-green, 5%) !default;
+$dark-green:	darken($green, 7%) !default;
+
+// Warning Colors
+$light-yellow:	#E8B51F !default;
+$yellow:				darken($light-yellow, 5%) !default;
+$dark-yellow:		darken($yellow, 7%) !default;
+
+// Error Colors
+$light-red:	#E74C3C !default;
+$red:				darken($light-red, 5%) !default;
+$dark-red:	darken($red, 7%) !default;
+
+
+// Basic styling for input containers
+.input-group {
+	margin-top: 1rem;
+	margin-bottom: 2.5rem;
+
+	& label {
+		display: block;
+		margin-bottom: .7rem;
+	}
+}
+
+// Basic styling for input elements
+.iv-input {
+	display: block;
+	width: 100%;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: .7rem;
+	padding-bottom: .7rem;
+
+	border: 1px solid #ccc;
+
+	&:focus {
+		outline: 0;
+		border-color: $light-blue;
+	}
+
+	&.iv-success {
+		border-color: $light-green;
+		color: $dark-green;
+	}
+
+	&.iv-error {
+		border-color: $light-red;
+		color: $dark-red;
+	}
+}
+
+// Styling for error messages
+.iv-message {
+	font-size: 1.3rem;
+	color: $dark-red;
+}
