@@ -53,7 +53,7 @@
 	var _extend = function() {
 		var args = arguments;
 		var i = args.length;
-		var result = arguments[0];
+		var result = args[0];
 
 		while ( i-- ) {
 			if (i === 0) break;
@@ -73,7 +73,7 @@
 
 	var _createMessage = function(str, substr) {
 		if (_isNumber(substr)) { substr = substr.toString(); }
-		return !(_isString(str) && _isString(substr))
+		return (_isString(str) && _isString(substr))
 			? str.replace('%s', substr) 
 			: str;
 	};
