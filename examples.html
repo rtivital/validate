@@ -1,0 +1,31 @@
+---
+layout: page
+title: Examples
+permalink: /examples/
+---
+<!-- Классы в Bootsrap 3 - http://getbootstrap.com/css/#forms-control-validation -->
+
+<h3>OnError and onSuccess functions</h3>
+<p>These functions will be used as <code>onError</code> and <code>onSuccess</code> in every example.They are designed to work with Bootstrap classes:</p>
+{% include on.html %}
+
+<div class="example">{% include example-basic.html %}</div>
+
+<h3>Extend Validator function</h3>
+<p>To create your own validation methods just assign them to <code>Validator.fn</code>:</p>
+{% include fn.html %}
+
+<div class="example">{% include example-password.html %}</div>
+
+
+<script src="{{ site.baseurl }}/js/validate.min.js"></script>
+<script src="{{ site.baseurl }}/js/examples.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+	$('.nav-tabs a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
+</script>

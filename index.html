@@ -1,0 +1,49 @@
+---
+layout: default
+title: Examples
+---
+
+
+<!-- Классы в Bootsrap 3 - http://getbootstrap.com/css/#forms-control-validation -->
+<div class="post-wrapper">
+  <div class="container post-body">
+    <main class="validator-container">
+    <h2 class="heading">Install</h2>
+    Install with Bower:
+
+    {% highlight bash %}
+    bower install input-validator.js
+    {% endhighlight %}
+
+    Or clone from Github:
+
+    {% highlight bash %}
+    git clone https://github.com/rtivital/validate.git
+    {% endhighlight %}
+
+
+    Include library before closing <code>body</code> tag
+
+    {% highlight html %}
+    <body>
+      ...
+      <script src="input-validator.min.js"></script>
+    </body>
+    {% endhighlight %}
+
+    <h2 class="heading">Validate</h2>
+    {% include example-basic.html %}
+    </main>
+  </div>
+</div>
+
+<script src="{{ site.baseurl }}/js/validate.min.js"></script>
+<script src="{{ site.baseurl }}/js/examples.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+  $('.nav-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>

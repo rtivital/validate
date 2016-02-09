@@ -1,0 +1,35 @@
+<h4>Code for this validation</h4>
+
+<div class="tabs">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#ex-email-js" aria-controls="ex-email-js" role="tab" data-toggle="tab">JavaScript</a></li>
+    <li role="presentation"><a href="#ex-email-html" aria-controls="ex-email-html" role="tab" data-toggle="tab">HTML</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="ex-email-js">{% highlight javascript %}var emailInput = new Validator.init(document.getElementById('email'), {
+  rules: {
+    min: 5,
+    max: 20,
+    match: 'email'
+  },
+  onError: onError,
+  onSuccess: onSuccess
+});
+
+var validateEmailBtn = document.getElementById('validate-email');
+validateEmailBtn.addEventListener('click', function(e) {
+  emailInput.validate();
+}, false);{% endhighlight %}</div>
+    <div role="tabpanel" class="tab-pane" id="ex-email-html">{% highlight html %}<div class="input-group center-block">
+  <label for="email">Your email address:</label>
+  <input type="text" class="form-control" id="email" placeholder="example@email.com">
+  <span id="email-error-container" class="help-block">Enter your email adress</span>
+  <button class="btn btn-default" id="validate-email">Validate email address</button>
+</div>{% endhighlight %}</div>
+  </div>
+
+</div>

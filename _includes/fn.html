@@ -1,0 +1,5 @@
+{% highlight javascript %}
+Validator.fn.password = function() {
+  return /^(?=.*\d)(?=.*[a-zA-Z]).*$/.test(this.value); 
+};
+{% endhighlight %}

@@ -1,33 +1,34 @@
-# Input Validator
-Input Validator is a modern lightweight library without dependencies for the data validation from single `<input />` tag. 
-
-View demo [here](http://rtivital.github.io/validate/)
+---
+layout: page
+title: Documentation
+permalink: /documetation/
+---
 
 ## Installation
 Install with Bower:
 
-```
+{% highlight bash %}
 bower install input-validator.js
-```
+{% endhighlight %}
 
 Or clone from Github:
 
-```
+{% highlight bash %}
 git clone https://github.com/rtivital/validate.git
-```
+{% endhighlight %}
 
 
 Include library before closing `<body>` tag
 
-```html
+{% highlight html %}
 <body>
 	...
 	<script src="input-validator.min.js"></script>
 </body>
-```
+{% endhighlight %}
 
 Grab the `<input />` tag from the DOM tree and start the data validation
-```javascript
+{% highlight javascript %}
 var emailInput = new Validator.init(document.getElementById('email'), {
   rules: {
     min: 5,
@@ -47,12 +48,13 @@ var emailInput = new Validator.init(document.getElementById('email'), {
     parentNode.querySelector('.help-block').textContent = 'Everything is valid!';
   }
 });
-```
+{% endhighlight %}
 
 ## Documentation
+
 ### Configuration object
 `Validator.init` function accepts consfiguration object like this one: 
-```javascript
+{% highlight javascript %}
 {
   rules: {
     min: 5,
@@ -66,9 +68,9 @@ var emailInput = new Validator.init(document.getElementById('email'), {
     console.log('Everything is valid!');
   }
 }
-```
+{% endhighlight %}
 These are minimum set of values. Additionally you can pass in `messages` and `regExps` objects to replace predefined settings or add your own testing rules:
-```javascript
+{% highlight javascript %}
 // Defaults:
 {
   regExps: {
@@ -85,11 +87,11 @@ These are minimum set of values. Additionally you can pass in `messages` and `re
     match: 'This field shold countain a valid %rule%'
   }
 }
-```
+{% endhighlight %}
 
 ### Basic validation
 Generally, you want the validation to occur with certain events (e.g. click, keyup, etc.). In this case consider this code:
-```javascript
+{% highlight javascript %}
 var onError = function() {
   var parentNode = this.element.parentNode;
   parentNode.classList.add('has-error');
@@ -118,36 +120,40 @@ document.getElementById('validate-btn').addEventListener('click', function(e) {
   e.preventDefault();
   emailInput.validate();
 });
-```
+{% endhighlight %}
 
 ### Validation methods
+
 #### required
 `Validator.fn.required` returns if the value contains at least one symbol, except for whitespace
-```javascript
+{% highlight javascript %}
 validate(document.getElementById('email'), {
   rules: {
     required: true
   }
 });
-```
+{% endhighlight %}
+
 #### min
 `Validator.fn.min` returns if the value length is more than provided length
-```javascript
+{% highlight javascript %}
 validate(document.getElementById('email'), {
   rules: {
     min: 8
   }
 });
-```
+{% endhighlight %}
+
 #### max
 `Validator.fn.max` returns if the value length is less than provided length
-```javascript
+{% highlight javascript %}
 validate(document.getElementById('email'), {
   rules: {
     max: 20
   }
 });
-```
+{% endhighlight %}
+
 #### match
 `Validator.fn.match` returns if the value matches certain pattern. Available patterns:
 
@@ -157,17 +163,17 @@ validate(document.getElementById('email'), {
 * digits
 * letters 
 
-```javascript
-validate(document.getElementById('email'), {
+{% highlight javascript %}
+var emailInput = new Validator.init(document.getElementById('email'), {
   rules: {
     match: 'email'
   }
 });
-```
+{% endhighlight %}
 
 You can also define tou regular expression in config object and then use it:
-```javascript
-validate(document.getElementById('email'), {
+{% highlight javascript %}
+var emailInput = new Validator.init(document.getElementById('email'), {
   regExps: {
     base64: /[^a-zA-Z0-9\/\+=]/i
   },
@@ -175,12 +181,13 @@ validate(document.getElementById('email'), {
     match: 'base64'
   }
 });
-```
+{% endhighlight %}
 ### Callbacks
+
 #### onError
 `onError` callback, which you define in config object, will be called every time `Validator.fn.validate` method fails: 
-```javascript
-validate(document.getElementById('email'), {
+{% highlight javascript %}
+var emailInput = new Validator.init(document.getElementById('email'), {
   rules: {
     min: 8,
     max: 50,
@@ -190,11 +197,11 @@ validate(document.getElementById('email'), {
     console.log('Error: ' + this.message);
   }
 });
-```
+{% endhighlight %}
 #### onSuccess
 `onSuccess` callback, which you define in config object, will be called every time `Validator.fn.validate` method passed: 
-```javascript
-validate(document.getElementById('email'), {
+{% highlight javascript %}
+var emailInput = new Validator.init(document.getElementById('email'), {
   rules: {
     min: 8,
     max: 50,
@@ -204,12 +211,12 @@ validate(document.getElementById('email'), {
     console.log('Everything is valid');
   }
 });
-```
+{% endhighlight %}
 
 #### Creating messages
 You can create your own messages with simple template variables `%rule%` and `%data%`:
-```javascript
-validate(document.getElementById('email'), {
+{% highlight javascript %}
+var emailInput = new Validator.init(document.getElementById('email'), {
   rules: {
     min: 8,
     max: 50,
@@ -221,7 +228,7 @@ validate(document.getElementById('email'), {
     match: '%data% is not a valid %rule% address'
   }
 });
-```
+{% endhighlight %}
 
 `%data%` refers to the current value from input field. `%rule%` refers to current param (e.g. 8 at `min`, 50 at `max` and `email` at `match`).
 
@@ -230,8 +237,11 @@ validate(document.getElementById('email'), {
 Input validator uses `Object.keys()` [ES5](http://caniuse.com/#feat=es5) feature. 
 
 Browser Support:
+
 * IE 9+
 * Chrome 23+
 * Firefox 21+
 * Opera 15+
 * Safari 6+
+
+
