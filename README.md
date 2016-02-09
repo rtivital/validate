@@ -5,288 +5,231 @@ View demo [here](http://rtivital.github.io/validate/)
 
 ## Installation
 Install with Bower:
+
 ```
 bower install input-validator.js
 ```
+
 Or clone from Github:
+
 ```
 git clone https://github.com/rtivital/validate.git
 ```
 
-## Usage 
-1. Include library before closing `<body>` tag
+
+Include library before closing `<body>` tag
+
 ```html
 <body>
 	...
 	<script src="input-validator.min.js"></script>
 </body>
 ```
-2. Include the stylesheet in your document `<head>` (optional)
-```html
-<head>
-	<link rel="stylesheet" href="input-validator.min.css">
-</head>
-```
 
-3. Grab `<input />` tag from the DOM tree and start the data validation
+Grab the `<input />` tag from the DOM tree and start the data validation
 ```javascript
-var btn = document.getElementById('validate-btn');
-btn.addEventListener('click', function(e) {
-	e.preventDefault();
-	var emailValidation = validate('#email')
-		.min(8)
-		.max(50)
-		.match('email')
-		.contain('gmail')
-		.onError(function() {
-			this.showErrors();
-			this.error();
-		})
-		.onSuccess(function() {
-			this.success();
-		});
-
-		if (emailValidation.isValid()) {
-			// If all specified tests have been passed, do something
-		}
+var emailInput = new Validator.init(document.getElementById('email'), {
+  rules: {
+    min: 5,
+    max: 20,
+    match: 'email'
+  },
+  onError: function() {
+    var parentNode = this.element.parentNode;
+    parentNode.classList.add('has-error');
+    parentNode.classList.remove('has-success');
+    parentNode.querySelector('.help-block').textContent = 'Error: ' + this.message;
+  },
+  onSuccess: function() {
+    var parentNode = this.element.parentNode;
+    parentNode.classList.add('has-success');
+    parentNode.classList.remove('has-error');
+    parentNode.querySelector('.help-block').textContent = 'Everything is valid!';
+  }
 });
 ```
 
 ## Documentation
-### Grabbing input element from the DOM tree
-You can either grab element yourself and then pass it in `validate()` function
+### Configuration object
+`Validator.init` function accepts consfiguration object like this one: 
 ```javascript
-var email = document.getElementById('email'),
-	emailValidation = validate(email);
+{
+  rules: {
+    min: 5,
+    max: 20,
+    match: 'email'
+  },
+  onError: function() {
+    console.log('Error' + this.message);
+  },
+  onSuccess: function() {
+    console.log('Everything is valid!');
+  }
+}
 ```
-or just pass selector in `validate()` function
+These are minimum set of values. Additionally you can pass in `messages` and `regExps` objects to replace predefined settings or add your own testing rules:
 ```javascript
-// It is recomended to pass in an id
-var emailValidation = validate('#email')
-// But you can pass whatever selector you like
-// In this case first element that matches provided selector will be grabbed from the DOM
-var emailValidation = validate('.email');
+// Defaults:
+{
+  regExps: {
+    email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+    url: /^((https?):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
+    numbers: /^\d+(\.\d{1,2})?$/,
+    digit: /[0-9]*$/,
+    letters: /[a-z][A-Z]*$/
+  },
+  messages = {
+    required: 'This field is required',
+    min: 'This field should contain at least %rule% characters',
+    max: 'This field should not contain more than %rule% characters',
+    match: 'This field shold countain a valid %rule%'
+  }
+}
 ```
 
 ### Basic validation
-After you have grabbed your input element from the DOM you can start validation. Generally, the validation should occur with certain events (e.g. click, keyup, etc.). In this case you should consider this code:
+Generally, you want the validation to occur with certain events (e.g. click, keyup, etc.). In this case consider this code:
 ```javascript
-var btn = document.getElementById('validate-btn');
-btn.addEventListener('click', function(e) {
-	e.preventDefault();
-	// With every event new validate object will be created
-	var emailValidation = validate('#email')
-		.min(8)
-		.max(50)
-		.match('email')
-		.contain('gmail')
-		.onError(function() {
-			this.showErrors();
-			this.error();
-		})
-		.onSuccess(function() {
-			this.success();
-		});
+var onError = function() {
+  var parentNode = this.element.parentNode;
+  parentNode.classList.add('has-error');
+  parentNode.classList.remove('has-success');
+  parentNode.querySelector('.help-block').textContent = 'Ошибка: ' + this.message;
+};
+
+var onSuccess = function() {
+  var parentNode = this.element.parentNode;
+  parentNode.classList.add('has-success');
+  parentNode.classList.remove('has-error');
+  parentNode.querySelector('.help-block').textContent = 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
+};
+
+var emailInput = new Validator.init(document.getElementById('email'), {
+  rules: {
+    min: 5,
+    max: 20,
+    match: 'email'
+  }
+  onError: onError,
+  onSuccess: onSuccess
 });
-```
-If you want to avoid a creation of new `validate` object every time, when the event occurs, you may create this object once before adding event listener and then refresh value:
-```javascript
-var btn = document.getElementById('validate-btn'),
-		emailValidation = validate('#email');
-btn.addEventListener('click', function(e) {
-	e.preventDefault();
-	// Refresh method will assign a new value from the input tag to emailValidation object
-	emailValidation
-		.refresh()
-		.clear()
-		.min(8)
-		.max(50)
-		.match('email')
-		.contain('gmail')
-		.onError(function() {
-			this.showErrors();
-			this.error();
-		})
-		.onSuccess(function() {
-			this.success();
-		});
+
+document.getElementById('validate-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  emailInput.validate();
 });
 ```
 
 ### Validation methods
 #### required
-`required(message)` returns if the value contains at least one symbol, except for whitespace
+`Validator.fn.required` returns if the value contains at least one symbol, except for whitespace
 ```javascript
-validate('#email')
-	.required('This field is required');
+validate(document.getElementById('email'), {
+  rules: {
+    required: true
+  }
+});
 ```
 #### min
-`min(length, message)` returns if the value length is more than provided length
+`Validator.fn.min` returns if the value length is more than provided length
 ```javascript
-validate('#email')
-	.min(8, 'This input should contain at least %s characters');
+validate(document.getElementById('email'), {
+  rules: {
+    min: 8
+  }
+});
 ```
 #### max
-`max(length, message)` returns if the value length is less than provided length
+`Validator.fn.max` returns if the value length is less than provided length
 ```javascript
-validate('#email')
-	.max(50, 'This input should not contain more than %s characters');
+validate(document.getElementById('email'), {
+  rules: {
+    max: 20
+  }
+});
 ```
 #### match
-`match(pattern, message)` returns if the value matches certain pattern. Available patterns:
+`Validator.fn.match` returns if the value matches certain pattern. Available patterns:
+
 * email
-* ip
-* date
-* base64 
 * url
-```javascript
-validate('#email')
-	.match('email', 'This field should contain a valid email address');
-```
-You can also pass regular expression 
-```javascript
-validate('#email')
-	.match(/^\-?[0-9]*\.?[0-9]+$/, 'This field should contain decimal');
-```
-#### contain
-`contain(substring, message)` returns if the value contains each provided character
-```javascript
-// You can pass in either array
-validate('#email')
-	.contain(['@', 'gmail', '.com'], 'This field should contain these substrings %s');
+* numbers
+* digits
+* letters 
 
-// or string
-validate('#email')
-	.contain('gmail', 'This field should contain this substring %s');
-```
-### Displaying errors
-All errors that will be displayed are appended to the `errorsContainer`. By default you don't need to create it yourself - the library will do this for you (it will create and append `errorsContainer` just before selected input tag).
-To show errors you can call `showErrors(index)` method:
 ```javascript
-// This code will show all errors
-validate('#email')
-	.required()
-	.match('email')
-	.contain('gmail')
-	.showErrors();
-
-// If you do not want all errors to display you can pass in index\
-// And now it will show only the first error
-validate('#email')
-	.required()
-	.match('email')
-	.contain('gmail')
-	.showErrors(0);
-```
-Also you can access errors array and do everything you like with it:
-```javascript
-var emailValidation = validate('#email')
-	.required()
-	.match('email')
-	.contain('gmail');
-
-emailValidation.errors; // All errors are stored withib this array
-```
-### Callbacks
-#### onError
-`onError(fn)` method accepts function, which will be called when validation fails
-```javascript
-validate('#email')
-	.match('email')
-	.onError(function() {
-		// this keyword refers to the created object
-		this.showErrors(0);
-		this.input.classList.add('error');
-		// Do something else ...
-	});
-```
-#### onSuccess
-`onSuccess(fn)` method accepts function, which will be called when validation passes
-```javascript
-validate('#email')
-	.match('email')
-	.onSuccess(function() {
-		// this keyword refers to the created object
-		this.input.classList.remove('error');
-		this.input.classList.add('success');
-		// Do something else ...
-	});
-```
-
-### Helpers
-#### isValid
-`isValid()` method returns if all chosen tests have been passed successfully
-```javascript
-var emailValidation = validate('#email')
-	.min(8)
-	.max(50)
-	.match('email');
-
-if (emailValidation.isValid()) {
-	// Do something here
-}
-```
-#### clear
-`clear()` method initializes new errors array 
-```javascript
-validate('#email')
-	.min(8)
-	.max(50)
-	.match('email')
-	.clear()
-	.showErrors(); // Nothig will be shown
-```
-
-#### error and success
-`error()` and `success()` methods can be used to add class which is specified in settings to the selected input element
-```javascript
-validate('#email')
-	.match('email')
-	.onError(function() {
-		this.error();
-	})
-	.onSuccess(function() {
-		this.success();
-	});
-```
-
-### Settings
-You can provide settings object to `validate` function
-```javascript
-// These are default settings
-var emailValidation = validate('#email' {
-	messages: {
-		min: 'This field should contain at least %s charachters',
-		max: 'This field should not contain more than %s charachters',
-		required: 'This field is required',
-		match: 'This field should match this pattern "%s"',
-		contain: 'This field sholud contain these charachters %s'
-	},
-	regexps: {
-		ip: /^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i,
-		url: /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
-		date: /\d{1,2}-|.\d{1,2}-|.\d{4}/,
-		base64: /[^a-zA-Z0-9\/\+=]/i,
-		email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-	},
-	classes: {
-		message: 'iv-message',
-		errorsContainer: 'iv-errors',
-		inputSuccess: 'iv-success',
-		inputError: 'iv-error'
-	}
+validate(document.getElementById('email'), {
+  rules: {
+    match: 'email'
+  }
 });
 ```
 
-## Browser support
-Input validator uses these [ES5](http://caniuse.com/#feat=es5) features: 
-* `Array.isArray()`	
-* `Array.some()`
-* `Array.every()`
-* `Array.forEach()` 
-* `Object.keys()`
+You can also define tou regular expression in config object and then use it:
+```javascript
+validate(document.getElementById('email'), {
+  regExps: {
+    base64: /[^a-zA-Z0-9\/\+=]/i
+  },
+  rules: {
+    match: 'base64'
+  }
+});
+```
+### Callbacks
+#### onError
+`onError` callback, which you define in config object, will be called every time `Validator.fn.validate` method fails: 
+```javascript
+validate(document.getElementById('email'), {
+  rules: {
+    min: 8,
+    max: 50,
+    match: 'email'
+  },
+  onError: function() {
+    console.log('Error: ' + this.message);
+  }
+});
+```
+#### onSuccess
+`onSuccess` callback, which you define in config object, will be called every time `Validator.fn.validate` method passed: 
+```javascript
+validate(document.getElementById('email'), {
+  rules: {
+    min: 8,
+    max: 50,
+    match: 'email'
+  },
+  onSuccess: function() {
+    console.log('Everything is valid');
+  }
+});
+```
 
-Browser Support
+#### Creating messages
+You can create your own messages with simple template variables `%rule%` and `%data%`:
+```javascript
+validate(document.getElementById('email'), {
+  rules: {
+    min: 8,
+    max: 50,
+    match: 'email'
+  },
+  messages: {
+    min: 'The value of this field shold be at least %rule% characters long. Value %data% does\'t fit well!',
+    max: 'The value of this field shold not be longer than %rule% characters. Value %data% does\'t fit well!',
+    match: '%data% is not a valid %rule% address'
+  }
+});
+```
+
+`%data%` refers to the current value from input field. `%rule%` refers to current param (e.g. 8 at `min`, 50 at `max` and `email` at `match`).
+
+
+## Browser support
+Input validator uses `Object.keys()` [ES5](http://caniuse.com/#feat=es5) feature. 
+
+Browser Support:
 * IE 9+
 * Chrome 23+
 * Firefox 21+
