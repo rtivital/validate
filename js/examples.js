@@ -25,29 +25,28 @@ var emailInput = new Validator.init(document.getElementById('email'), {
 Validator.fn.password = function() {
   return /^(?=.*\d)(?=.*[a-zA-Z]).*$/.test(this.value); 
 };
-if (ps) {
-  var passwordInput = new Validator.init(document.getElementById('password'), {
-    rules: {
-      required: true,
-      password: true,
-      min: 8
-    },
-    messages: {
-      password: 'Password should contain letters and numbers. %data% is invalid password'
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
+
+var passwordInput = new Validator.init(document.getElementById('password'), {
+  rules: {
+    required: true,
+    password: true,
+    min: 8
+  },
+  messages: {
+    password: 'Password should contain letters and numbers. %data% is invalid password'
+  },
+  onError: onError,
+  onSuccess: onSuccess
+});
 
 
 
-  var validateEmailBtn = document.getElementById('validate-email');
-  validateEmailBtn.addEventListener('click', function(e) {
-    emailInput.validate();
-  }, false);
+var validateEmailBtn = document.getElementById('validate-email');
+validateEmailBtn.addEventListener('click', function(e) {
+  emailInput.validate();
+}, false);
 
-  var validatePasswordBtn = document.getElementById('validate-password');
-  validatePasswordBtn.addEventListener('click', function(e) {
-    passwordInput.validate();
-  }, false);
-}
+var validatePasswordBtn = document.getElementById('validate-password');
+validatePasswordBtn.addEventListener('click', function(e) {
+  passwordInput.validate();
+}, false);
