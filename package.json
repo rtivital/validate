@@ -1,11 +1,9 @@
 {
   "name": "input-validator.js",
-  "version": "0.1.0",
-  "description": "modern lightweight library without dependencies for data validation from single input tag.",
+  "version": "1.0.0",
+  "description": "Modern lightweight library without dependencies for data validation from single input tag.",
   "main": "gulpfile.js",
-  "directories": {
-    "example": "example"
-  },
+  "directories": {},
   "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.0",
@@ -30,5 +28,5 @@
   "bugs": {
     "url": "https://github.com/rtivital/validate/issues"
   },
-  "homepage": "https://github.com/rtivital/validate#readme"
+  "homepage": "http://rtivital.github.io/validate"
 }
