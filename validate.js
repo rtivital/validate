@@ -1,3 +1,4 @@
+/* exported Validator */
 var Validator = (function() {
   'use strict';
 
@@ -14,7 +15,7 @@ var Validator = (function() {
     if (!element || !element.tagName) {
       return false;
     }
-    var tagName = element.tagName.toLowerCase()
+    var tagName = element.tagName.toLowerCase();
     return tagName === 'input' || tagName === 'textarea';
   };
 
@@ -125,10 +126,9 @@ var Validator = (function() {
   fn.match = function(param) {
     var re = this.regExps[param];
     if (!re) {
-      console.warn('There are no such predefined regexp: '
+      throw new Error('There are no such predefined regexp: '
         + param + '. All predefined regExps are: '
-        + Object.keys(this.options.regExps).join(', ') +'. Data is assumed to be valid.');
-      return true;
+        + Object.keys(this.options.regExps).join(', '));
     }
     return this.regExps[param].test(this.value);
   };
